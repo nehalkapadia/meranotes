@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1034641219827",
+    "project_id": "meranotes-flutter-first",
+    "storage_bucket": "meranotes-flutter-first.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1034641219827:android:8c7aa593ffeb8fb2dd5786",
+        "android_client_info": {
+          "package_name": "com.example.meranotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1034641219827-at4adla0supkjsilk7ppp2medsn8v21o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8R0m7yq2IJCoHXIHBdj_2Urbgfh_qHkE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1034641219827-at4adla0supkjsilk7ppp2medsn8v21o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
