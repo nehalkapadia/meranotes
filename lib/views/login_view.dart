@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meranotes/constants/messages.dart';
 import 'package:meranotes/constants/routes.dart';
 import 'package:meranotes/services/auth/auth_exceptions.dart';
 import 'package:meranotes/services/auth/auth_service.dart';
@@ -32,7 +33,7 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Login')),
+      appBar: AppBar(title: const Text(loginButtonTitle)),
       body: Column(
         children: [
           TextField(
@@ -40,16 +41,14 @@ class _LoginViewState extends State<LoginView> {
             enableSuggestions: false,
             autocorrect: false,
             keyboardType: TextInputType.emailAddress,
-            decoration:
-                const InputDecoration(hintText: 'Enter your email id here!'),
+            decoration: const InputDecoration(hintText: hintEmailText),
           ),
           TextField(
             controller: _password,
             obscureText: true,
             enableSuggestions: false,
             autocorrect: false,
-            decoration:
-                const InputDecoration(hintText: 'Enter your password here!'),
+            decoration: const InputDecoration(hintText: hintPasswordText),
           ),
           TextButton(
             onPressed: () async {
@@ -78,21 +77,21 @@ class _LoginViewState extends State<LoginView> {
               } on UserNotFoundAuthException {
                 await showErrorDialog(
                   context,
-                  'User not found!',
+                  userNotFoundMessage,
                 );
               } on WrongPasswordAuthException {
                 await showErrorDialog(
                   context,
-                  'Wrong credentials!',
+                  wrongCredentialsMessage,
                 );
               } on GenericAuthException {
                 await showErrorDialog(
                   context,
-                  'Authentication Error!',
+                  generalLoginMessage,
                 );
               }
             },
-            child: const Text('Login'),
+            child: const Text(loginButtonTitle),
           ),
           TextButton(
               onPressed: () {
@@ -101,7 +100,7 @@ class _LoginViewState extends State<LoginView> {
                   (route) => false,
                 );
               },
-              child: const Text('Not registered yet? Register here!'))
+              child: const Text(notRegisteredButtonText))
         ],
       ),
     );

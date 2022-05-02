@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meranotes/constants/messages.dart';
 import 'package:meranotes/constants/routes.dart';
 import 'package:meranotes/services/auth/auth_service.dart';
 
@@ -13,18 +14,16 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Verify Email Address')),
+      appBar: AppBar(title: const Text(verifyEmailAddressTitle)),
       body: Column(
         children: [
-          const Text(
-              "We've already sent you an email for verification. Please open it & click the verification link to verify your account."),
-          const Text(
-              "If you haven't received the verification email yet, press the button below!"),
+          const Text(emailVerificationSentMessage),
+          const Text(emailVerificationNotSetMessage),
           TextButton(
             onPressed: () async {
               await AuthService.firebase().sendEmailVerification();
             },
-            child: const Text('Send email for verification.'),
+            child: const Text(sendEmailVerificationButtonText),
           ),
           TextButton(
             onPressed: () async {

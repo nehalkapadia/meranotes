@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meranotes/constants/messages.dart';
 import 'package:meranotes/constants/routes.dart';
 import 'package:meranotes/services/auth/auth_exceptions.dart';
 import 'package:meranotes/services/auth/auth_service.dart';
@@ -33,7 +34,7 @@ class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Register')),
+      appBar: AppBar(title: const Text(registerButtonTitle)),
       body: Column(
         children: [
           TextField(
@@ -41,16 +42,14 @@ class _RegisterViewState extends State<RegisterView> {
             enableSuggestions: false,
             autocorrect: false,
             keyboardType: TextInputType.emailAddress,
-            decoration:
-                const InputDecoration(hintText: 'Enter your email id here!'),
+            decoration: const InputDecoration(hintText: hintEmailText),
           ),
           TextField(
             controller: _password,
             obscureText: true,
             enableSuggestions: false,
             autocorrect: false,
-            decoration:
-                const InputDecoration(hintText: 'Enter your password here!'),
+            decoration: const InputDecoration(hintText: hintPasswordText),
           ),
           TextButton(
             onPressed: () async {
@@ -69,26 +68,26 @@ class _RegisterViewState extends State<RegisterView> {
               } on WeakPasswordAuthException {
                 await showErrorDialog(
                   context,
-                  'Weak Password!',
+                  weakPasswordMessage,
                 );
               } on EmailAlreadyInUseAuthException {
                 await showErrorDialog(
                   context,
-                  'Email id already exists!',
+                  emailIdAlreadyExistsMessage,
                 );
               } on InvalidEmailAuthException {
                 await showErrorDialog(
                   context,
-                  'Invalid Email Id!',
+                  invalidEmailIdMessage,
                 );
               } on GenericAuthException {
                 await showErrorDialog(
                   context,
-                  'Registration Failed!',
+                  genericRegistrationMessage,
                 );
               }
             },
-            child: const Text('Register'),
+            child: const Text(registerButtonTitle),
           ),
           TextButton(
               onPressed: () {
@@ -97,7 +96,7 @@ class _RegisterViewState extends State<RegisterView> {
                   (route) => false,
                 );
               },
-              child: const Text('Already registered? Login here!'))
+              child: const Text(alreadyUserButtonText))
         ],
       ),
     );

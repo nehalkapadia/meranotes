@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meranotes/constants/messages.dart';
 import 'package:meranotes/constants/routes.dart';
 import 'package:meranotes/enums/menu_action.dart';
 import 'package:meranotes/services/auth/auth_service.dart';
@@ -15,7 +16,7 @@ class _NotesViewState extends State<NotesView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mera Notes'),
+        title: const Text(appBarTitle),
         actions: [
           PopupMenuButton<MenuAction>(
             onSelected: (value) async {
@@ -34,14 +35,14 @@ class _NotesViewState extends State<NotesView> {
               return const [
                 PopupMenuItem<MenuAction>(
                   value: MenuAction.logout,
-                  child: Text('Logout'),
+                  child: Text(logoutButtonText),
                 )
               ];
             },
           )
         ],
       ),
-      body: const Text('Hello World!'),
+      body: const Text(appBodyText),
     );
   }
 }
@@ -51,8 +52,8 @@ Future<bool> showLogOutDialog(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: const Text('Logout'),
-        content: const Text('Are you sure you want log out?'),
+        title: const Text(logoutButtonText),
+        content: const Text(confirmLogoutMessage),
         actions: [
           TextButton(
             onPressed: () {
@@ -64,7 +65,7 @@ Future<bool> showLogOutDialog(BuildContext context) {
             onPressed: () {
               Navigator.of(context).pop(true);
             },
-            child: const Text('Logout'),
+            child: const Text(logoutButtonText),
           ),
         ],
       );
