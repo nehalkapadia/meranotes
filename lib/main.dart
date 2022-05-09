@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meranotes/constants/routes.dart';
 import 'package:meranotes/services/auth/auth_service.dart';
-import 'package:meranotes/views/notes_view.dart';
+import 'package:meranotes/views/notes/add_note_view.dart';
+import 'package:meranotes/views/notes/notes_view.dart';
 import 'package:meranotes/views/verify_email.dart';
 import 'package:meranotes/views/login_view.dart';
 import 'package:meranotes/views/register_view.dart';
@@ -21,6 +22,7 @@ void main() {
         registerRoute: (context) => const RegisterView(),
         notesRoute: (context) => const NotesView(),
         verifyEmailRoute: (context) => const VerifyEmailView(),
+        addNewNoteRoute: (context) => const AddNewNoteView(),
       },
     ),
   );

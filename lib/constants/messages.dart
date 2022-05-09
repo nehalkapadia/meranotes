@@ -28,3 +28,6 @@ const emailIdAlreadyExistsMessage = 'Email id already exists!';
 const invalidEmailIdMessage = 'Invalid Email Id!';
 const genericRegistrationMessage = 'Registration Failed!';
 const alreadyUserButtonText = 'Not registered yet? Register here!';
+
+// add new note screen messages/titles
+const addNewNoteTitle = 'Add new note';
