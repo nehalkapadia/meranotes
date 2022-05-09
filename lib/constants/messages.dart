@@ -31,3 +31,4 @@ const alreadyUserButtonText = 'Not registered yet? Register here!';
 
 // add new note screen messages/titles
 const addNewNoteTitle = 'Add new note';
+const hintTypeText = 'Start typing your note...';
