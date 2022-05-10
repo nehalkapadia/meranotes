@@ -3,7 +3,7 @@ import 'package:meranotes/constants/messages.dart';
 import 'package:meranotes/constants/routes.dart';
 import 'package:meranotes/services/auth/auth_exceptions.dart';
 import 'package:meranotes/services/auth/auth_service.dart';
-import 'package:meranotes/utilities/show_error_dialog.dart';
+import 'package:meranotes/utilities/error_dialog.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
