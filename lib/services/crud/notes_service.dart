@@ -5,11 +5,14 @@ import 'package:path_provider/path_provider.dart'
     show getApplicationDocumentsDirectory, MissingPlatformDirectoryException;
 import 'package:path/path.dart' show join;
 import 'package:sqflite/sqflite.dart';
+import 'package:meranotes/extenions/list/filter.dart';
 
 class NotesService {
   Database? _db;
 
   List<DatabaseNote> _notes = [];
+
+  DatabaseUser? _user;
 
   static final NotesService _shared = NotesService._sharedInstance();
   NotesService._sharedInstance() {
@@ -23,13 +26,37 @@ class NotesService {
 
   late final StreamController<List<DatabaseNote>> _notesStreamController;
 
-  Stream<List<DatabaseNote>> get allNotes => _notesStreamController.stream;
+  Stream<List<DatabaseNote>> get allNotes =>
+      _notesStreamController.stream.filter((note) {
+        final currentUser = _user;
 
-  Future<DatabaseUser> getOrCreateUser({required String email}) async {
+        if (currentUser != null) {
+          return note.userId == currentUser.id;
+        } else {
+          throw UserShouldBeSetBeforeReadingAllNotes();
+        }
+      });
+
+  Future<DatabaseUser> getOrCreateUser({
+    required String email,
+    bool setAsCurrentUser = true,
+  }) async {
     try {
-      return await getUser(email: email);
+      final user = await getUser(email: email);
+
+      if (setAsCurrentUser) {
+        _user = user;
+      }
+
+      return user;
     } on NoUsersException {
-      return await createUser(email: email);
+      final user = await createUser(email: email);
+
+      if (setAsCurrentUser) {
+        _user = user;
+      }
+
+      return user;
     } catch (e) {
       rethrow;
     }
@@ -142,10 +169,16 @@ class NotesService {
     await getNote(id: note.id);
 
     // update note
-    final updatedNote = db.update(notesTable, {
-      textColumn: text,
-      isSyncedColumn: 0,
-    });
+    final updatedNote = db.update(
+        notesTable,
+        {
+          textColumn: text,
+          isSyncedColumn: 0,
+        },
+        where: 'id=?',
+        whereArgs: [
+          note.id,
+        ]);
 
     if (updatedNote == 0) {
       throw CouldNoteUpdateNote();

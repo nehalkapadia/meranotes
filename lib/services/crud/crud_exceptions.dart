@@ -10,6 +10,8 @@ class UserCannotBeDeletedException implements Exception {}
 
 class UserAlreadyExistsException implements Exception {}
 
+class UserShouldBeSetBeforeReadingAllNotes implements Exception {}
+
 // Notes exceptions
 class NoUsersException implements Exception {}
 
