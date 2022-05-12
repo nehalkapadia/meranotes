@@ -5,7 +5,7 @@ import 'package:meranotes/enums/menu_action.dart';
 import 'package:meranotes/services/auth/auth_service.dart';
 import 'package:meranotes/services/cloud/cloud_note.dart';
 import 'package:meranotes/services/cloud/firebase_cloud_storage.dart';
-import 'package:meranotes/utilities/logout_dialog.dart';
+import 'package:meranotes/utilities/dialog/logout_dialog.dart';
 import 'package:meranotes/views/notes/notes_list_view.dart';
 
 class NotesView extends StatefulWidget {

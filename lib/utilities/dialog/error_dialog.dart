@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meranotes/utilities/generic_dialog.dart';
+import 'package:meranotes/utilities/dialog/generic_dialog.dart';
 
 Future<void> showErrorDialog(
   BuildContext context,

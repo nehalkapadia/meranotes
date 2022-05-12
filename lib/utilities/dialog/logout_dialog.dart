@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meranotes/constants/messages.dart';
-import 'package:meranotes/utilities/generic_dialog.dart';
+import 'package:meranotes/utilities/dialog/generic_dialog.dart';
 
 Future<bool> showLogoutDialog(
   BuildContext context,
