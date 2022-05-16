@@ -8,6 +8,7 @@ import 'package:meranotes/services/cloud/cloud_note.dart';
 import 'package:meranotes/services/cloud/firebase_cloud_storage.dart';
 import 'package:meranotes/services/cloud/cloud_storage_exceptions.dart';
 import 'package:share_plus/share_plus.dart';
+import 'dart:developer' as devtools;
 
 class AddUpdateNoteView extends StatefulWidget {
   const AddUpdateNoteView({Key? key}) : super(key: key);
@@ -77,11 +78,10 @@ class _AddUpdateNoteViewState extends State<AddUpdateNoteView> {
 
   void _saveNoteIfTextIsNoteEmpty() async {
     final note = _note;
-
     if (_textEditingController.text.isNotEmpty && note != null) {
       await _notesService.updateNote(
         documentId: note.documentId,
-        text: note.text,
+        text: _textEditingController.text,
       );
     }
   }
