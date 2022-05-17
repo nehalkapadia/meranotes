@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:meranotes/constants/messages.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meranotes/constants/routes.dart';
 import 'package:meranotes/enums/menu_action.dart';
-import 'package:meranotes/services/auth/auth_service.dart';
+import 'package:meranotes/constants/messages.dart';
 import 'package:meranotes/services/cloud/cloud_note.dart';
-import 'package:meranotes/services/cloud/firebase_cloud_storage.dart';
-import 'package:meranotes/utilities/dialog/logout_dialog.dart';
+import 'package:meranotes/services/auth/auth_service.dart';
 import 'package:meranotes/views/notes/notes_list_view.dart';
+import 'package:meranotes/services/auth/bloc/auth_bloc.dart';
+import 'package:meranotes/services/auth/bloc/auth_event.dart';
+import 'package:meranotes/utilities/dialog/logout_dialog.dart';
+import 'package:meranotes/services/cloud/firebase_cloud_storage.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({Key? key}) : super(key: key);
@@ -43,9 +46,9 @@ class _NotesViewState extends State<NotesView> {
                 case MenuAction.logout:
                   final shouldLogout = await showLogoutDialog(context);
                   if (shouldLogout) {
-                    await AuthService.firebase().logOut();
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil(loginRoute, (route) => false);
+                    context.read<AuthBloc>().add(
+                          const AuthEventLogout(),
+                        );
                   }
                   break;
               }
