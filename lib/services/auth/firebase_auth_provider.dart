@@ -85,7 +85,6 @@ class FirebaseAuthProvider implements AuthProvider {
         throw WrongPasswordAuthException();
       } else {
         throw GenericAuthException();
-        ;
       }
     } catch (e) {
       throw GenericAuthException();
