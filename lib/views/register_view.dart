@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:meranotes/constants/messages.dart';
 import 'package:meranotes/constants/routes.dart';
 import 'package:meranotes/services/auth/auth_exceptions.dart';
-import 'package:meranotes/services/auth/auth_service.dart';
+import 'package:meranotes/services/auth/bloc/auth_bloc.dart';
+import 'package:meranotes/services/auth/bloc/auth_event.dart';
+import 'package:meranotes/services/auth/bloc/auth_state.dart';
 import 'package:meranotes/utilities/dialog/error_dialog.dart';
+// import 'package:meranotes/utilities/dialog/loading_dialog.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
@@ -15,6 +19,7 @@ class RegisterView extends StatefulWidget {
 class _RegisterViewState extends State<RegisterView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
+  // CloseDialog? _closeDialog;
 
   @override
   void initState() {
@@ -33,71 +38,73 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text(registerButtonTitle)),
-      body: Column(
-        children: [
-          TextField(
-            controller: _email,
-            enableSuggestions: false,
-            autocorrect: false,
-            keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(hintText: hintEmailText),
-          ),
-          TextField(
-            controller: _password,
-            obscureText: true,
-            enableSuggestions: false,
-            autocorrect: false,
-            decoration: const InputDecoration(hintText: hintPasswordText),
-          ),
-          TextButton(
-            onPressed: () async {
-              final email = _email.text;
-              final password = _password.text;
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) async {
+        if (state is AuthStateRegistering) {
+//          final closeDialog = _closeDialog;
 
-              try {
-                await AuthService.firebase().createUser(
-                  email: email,
-                  password: password,
-                );
+          // if (!state.isLoading && closeDialog != null) {
+          //   closeDialog();
+          //   _closeDialog = null;
+          // } else if (state.isLoading && closeDialog == null) {
+          //   _closeDialog = showLoadingDialog(
+          //     context: context,
+          //     text: 'Loading...',
+          //   );
+          // }
 
-                await AuthService.firebase().sendEmailVerification();
+          if (state.exception is WeakPasswordAuthException) {
+            await showErrorDialog(context, 'Weak Password!');
+          } else if (state.exception is EmailAlreadyInUseAuthException) {
+            await showErrorDialog(context, 'User Exists!');
+          } else if (state.exception is InvalidEmailAuthException) {
+            await showErrorDialog(context, 'Invalid Email!');
+          } else if (state.exception is GenericAuthException) {
+            await showErrorDialog(context, 'Registration Failed!');
+          }
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(title: const Text(registerButtonTitle)),
+        body: Column(
+          children: [
+            TextField(
+              controller: _email,
+              enableSuggestions: false,
+              autocorrect: false,
+              keyboardType: TextInputType.emailAddress,
+              decoration: const InputDecoration(hintText: hintEmailText),
+            ),
+            TextField(
+              controller: _password,
+              obscureText: true,
+              enableSuggestions: false,
+              autocorrect: false,
+              decoration: const InputDecoration(hintText: hintPasswordText),
+            ),
+            TextButton(
+              onPressed: () async {
+                final email = _email.text;
+                final password = _password.text;
 
-                Navigator.of(context).pushNamed(verifyEmailRoute);
-              } on WeakPasswordAuthException {
-                await showErrorDialog(
-                  context,
-                  weakPasswordMessage,
-                );
-              } on EmailAlreadyInUseAuthException {
-                await showErrorDialog(
-                  context,
-                  emailIdAlreadyExistsMessage,
-                );
-              } on InvalidEmailAuthException {
-                await showErrorDialog(
-                  context,
-                  invalidEmailIdMessage,
-                );
-              } on GenericAuthException {
-                await showErrorDialog(
-                  context,
-                  genericRegistrationMessage,
-                );
-              }
-            },
-            child: const Text(registerButtonTitle),
-          ),
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  loginRoute,
-                  (route) => false,
-                );
+                context.read<AuthBloc>().add(
+                      AuthEventRegister(
+                        email,
+                        password,
+                      ),
+                    );
               },
-              child: const Text(alreadyUserButtonText))
-        ],
+              child: const Text(registerButtonTitle),
+            ),
+            TextButton(
+                onPressed: () {
+                  context.read<AuthBloc>().add(
+                        const AuthEventLogout(),
+                      );
+                },
+                child: const Text(alreadyUserButtonText))
+          ],
+        ),
       ),
     );
   }
