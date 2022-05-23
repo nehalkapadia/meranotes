@@ -41,69 +41,69 @@ class _RegisterViewState extends State<RegisterView> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
         if (state is AuthStateRegistering) {
-//          final closeDialog = _closeDialog;
-
-          // if (!state.isLoading && closeDialog != null) {
-          //   closeDialog();
-          //   _closeDialog = null;
-          // } else if (state.isLoading && closeDialog == null) {
-          //   _closeDialog = showLoadingDialog(
-          //     context: context,
-          //     text: 'Loading...',
-          //   );
-          // }
-
           if (state.exception is WeakPasswordAuthException) {
-            await showErrorDialog(context, 'Weak Password!');
+            await showErrorDialog(context, weakPasswordMessage);
           } else if (state.exception is EmailAlreadyInUseAuthException) {
-            await showErrorDialog(context, 'User Exists!');
+            await showErrorDialog(context, emailIdAlreadyExistsMessage);
           } else if (state.exception is InvalidEmailAuthException) {
-            await showErrorDialog(context, 'Invalid Email!');
+            await showErrorDialog(context, invalidEmailIdMessage);
           } else if (state.exception is GenericAuthException) {
-            await showErrorDialog(context, 'Registration Failed!');
+            await showErrorDialog(context, genericRegistrationMessage);
           }
         }
       },
       child: Scaffold(
         appBar: AppBar(title: const Text(registerButtonTitle)),
-        body: Column(
-          children: [
-            TextField(
-              controller: _email,
-              enableSuggestions: false,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(hintText: hintEmailText),
-            ),
-            TextField(
-              controller: _password,
-              obscureText: true,
-              enableSuggestions: false,
-              autocorrect: false,
-              decoration: const InputDecoration(hintText: hintPasswordText),
-            ),
-            TextButton(
-              onPressed: () async {
-                final email = _email.text;
-                final password = _password.text;
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(
+                controller: _email,
+                enableSuggestions: false,
+                autocorrect: false,
+                autofocus: true,
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(hintText: hintEmailText),
+              ),
+              TextField(
+                controller: _password,
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
+                decoration: const InputDecoration(hintText: hintPasswordText),
+              ),
+              Center(
+                child: Column(
+                  children: [
+                    TextButton(
+                      onPressed: () async {
+                        final email = _email.text;
+                        final password = _password.text;
 
-                context.read<AuthBloc>().add(
-                      AuthEventRegister(
-                        email,
-                        password,
-                      ),
-                    );
-              },
-              child: const Text(registerButtonTitle),
-            ),
-            TextButton(
-                onPressed: () {
-                  context.read<AuthBloc>().add(
-                        const AuthEventLogout(),
-                      );
-                },
-                child: const Text(alreadyUserButtonText))
-          ],
+                        context.read<AuthBloc>().add(
+                              AuthEventRegister(
+                                email,
+                                password,
+                              ),
+                            );
+                      },
+                      child: const Text(registerButtonTitle),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        context.read<AuthBloc>().add(
+                              const AuthEventLogout(),
+                            );
+                      },
+                      child: const Text(alreadyUserButtonText),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

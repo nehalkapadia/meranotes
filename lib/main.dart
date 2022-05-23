@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meranotes/constants/routes.dart';
 import 'package:meranotes/helpers/loading/loading_screen.dart';
+import 'package:meranotes/views/forgot_password_view.dart';
 import 'package:meranotes/views/login_view.dart';
 import 'package:meranotes/views/verify_email.dart';
 import 'package:meranotes/views/register_view.dart';
@@ -57,6 +58,8 @@ class HomePage extends StatelessWidget {
           return const VerifyEmailView();
         } else if (state is AuthStateLogout) {
           return const LoginView();
+        } else if (state is AuthStateForgotPassword) {
+          return const ForgotPasswordView();
         } else if (state is AuthStateRegistering) {
           return const RegisterView();
         } else {

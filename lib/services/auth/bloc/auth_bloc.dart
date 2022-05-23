@@ -6,6 +6,17 @@ import 'package:meranotes/services/auth/bloc/auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(AuthProvider provider)
       : super(const AuthStateUninitialized(isLoading: true)) {
+    on<AuthEventShouldRegister>(
+      (event, emit) {
+        emit(
+          const AuthStateRegistering(
+            exception: null,
+            isLoading: false,
+          ),
+        );
+      },
+    );
+
     // send email verification
     on<AuthEventSendEmailVerification>(
       ((event, emit) async {
@@ -136,6 +147,47 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           );
         }
       }),
+    );
+
+    // forgot password
+    on<AuthEventForgotPassword>(
+      (event, emit) async {
+        emit(const AuthStateForgotPassword(
+          exception: null,
+          hasSentEmail: false,
+          isLoading: false,
+        ));
+
+        final email = event.email;
+        if (email == null) {
+          return; // users just wants to go to forgot password screen
+        }
+
+        // user  actually wants to send email
+        emit(const AuthStateForgotPassword(
+          exception: null,
+          hasSentEmail: false,
+          isLoading: true,
+        ));
+
+        bool didSendEmail = false;
+        Exception? exception;
+
+        try {
+          await provider.sendPasswordResetEmail(toEmail: email);
+          didSendEmail = true;
+          exception = null;
+        } on Exception catch (e) {
+          didSendEmail = false;
+          exception = e;
+        }
+
+        emit(AuthStateForgotPassword(
+          exception: exception,
+          hasSentEmail: didSendEmail,
+          isLoading: false,
+        ));
+      },
     );
   }
 }

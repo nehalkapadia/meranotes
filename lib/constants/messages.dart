@@ -16,10 +16,11 @@ const appBodyText = 'Hello World!';
 const loginButtonTitle = 'Login';
 const hintEmailText = 'Enter your email id here!';
 const hintPasswordText = 'Enter your password here!';
-const userNotFoundMessage = 'User not found!';
+const userNotFoundMessage = 'Cannot find user with entered credentials';
 const wrongCredentialsMessage = 'Wrong credentials!';
 const generalLoginMessage = 'Authentication Error!';
 const notRegisteredButtonText = 'Not registered yet? Register here!';
+const forgotPasswordButtonText = 'Forgot Password?';
 
 // register view screen messages/titles
 const registerButtonTitle = 'Register';
