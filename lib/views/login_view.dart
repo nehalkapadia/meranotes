@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meranotes/constants/routes.dart';
 import 'package:meranotes/constants/messages.dart';
 import 'package:meranotes/services/auth/bloc/auth_bloc.dart';
 import 'package:meranotes/services/auth/auth_exceptions.dart';
 import 'package:meranotes/services/auth/bloc/auth_event.dart';
 import 'package:meranotes/services/auth/bloc/auth_state.dart';
 import 'package:meranotes/utilities/dialog/error_dialog.dart';
-import 'package:meranotes/utilities/dialog/loading_dialog.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -19,7 +17,6 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
-  CloseDialog? _closeDialog;
 
   @override
   void initState() {
@@ -40,18 +37,6 @@ class _LoginViewState extends State<LoginView> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
         if (state is AuthStateLogout) {
-          final closeDialog = _closeDialog;
-
-          if (!state.isLoading && closeDialog != null) {
-            closeDialog();
-            _closeDialog = null;
-          } else if (state.isLoading && closeDialog == null) {
-            _closeDialog = showLoadingDialog(
-              context: context,
-              text: 'Loading...',
-            );
-          }
-
           if (state.exception is UserNotFoundAuthException) {
             showErrorDialog(context, 'User not found!');
           } else if (state.exception is WrongPasswordAuthException) {
