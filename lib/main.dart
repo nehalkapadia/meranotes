@@ -12,12 +12,15 @@ import 'package:meranotes/services/auth/bloc/auth_event.dart';
 import 'package:meranotes/services/auth/bloc/auth_state.dart';
 import 'package:meranotes/views/notes/add_update_note_view.dart';
 import 'package:meranotes/services/auth/firebase_auth_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(
     MaterialApp(
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,

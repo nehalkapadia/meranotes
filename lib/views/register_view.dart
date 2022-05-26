@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:meranotes/constants/messages.dart';
-import 'package:meranotes/constants/routes.dart';
+import 'package:meranotes/extenions/buildcontext/loc.dart';
 import 'package:meranotes/services/auth/auth_exceptions.dart';
 import 'package:meranotes/services/auth/bloc/auth_bloc.dart';
 import 'package:meranotes/services/auth/bloc/auth_event.dart';
 import 'package:meranotes/services/auth/bloc/auth_state.dart';
 import 'package:meranotes/utilities/dialog/error_dialog.dart';
-// import 'package:meranotes/utilities/dialog/loading_dialog.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegisterView extends StatefulWidget {
@@ -42,18 +40,31 @@ class _RegisterViewState extends State<RegisterView> {
       listener: (context, state) async {
         if (state is AuthStateRegistering) {
           if (state.exception is WeakPasswordAuthException) {
-            await showErrorDialog(context, weakPasswordMessage);
+            await showErrorDialog(
+              context,
+              context.loc.register_error_weak_password,
+            );
           } else if (state.exception is EmailAlreadyInUseAuthException) {
-            await showErrorDialog(context, emailIdAlreadyExistsMessage);
+            await showErrorDialog(
+              context,
+              context.loc.register_error_email_already_in_use,
+            );
           } else if (state.exception is InvalidEmailAuthException) {
-            await showErrorDialog(context, invalidEmailIdMessage);
+            await showErrorDialog(
+                context, context.loc.register_error_invalid_email);
           } else if (state.exception is GenericAuthException) {
-            await showErrorDialog(context, genericRegistrationMessage);
+            await showErrorDialog(
+              context,
+              context.loc.register_error_generic,
+            );
           }
         }
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text(registerButtonTitle)),
+        appBar: AppBar(
+            title: Text(
+          context.loc.register,
+        )),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
@@ -66,14 +77,18 @@ class _RegisterViewState extends State<RegisterView> {
                   autocorrect: false,
                   autofocus: true,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(hintText: hintEmailText),
+                  decoration: InputDecoration(
+                    hintText: context.loc.email_text_field_placeholder,
+                  ),
                 ),
                 TextField(
                   controller: _password,
                   obscureText: true,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(hintText: hintPasswordText),
+                  decoration: InputDecoration(
+                    hintText: context.loc.password_text_field_placeholder,
+                  ),
                 ),
                 Center(
                   child: Column(
@@ -90,7 +105,9 @@ class _RegisterViewState extends State<RegisterView> {
                                 ),
                               );
                         },
-                        child: const Text(registerButtonTitle),
+                        child: Text(
+                          context.loc.register,
+                        ),
                       ),
                       TextButton(
                         onPressed: () {
@@ -98,7 +115,9 @@ class _RegisterViewState extends State<RegisterView> {
                                 const AuthEventLogout(),
                               );
                         },
-                        child: const Text(alreadyUserButtonText),
+                        child: Text(
+                          context.loc.register_view_already_registered,
+                        ),
                       ),
                     ],
                   ),

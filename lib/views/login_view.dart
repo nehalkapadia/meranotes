@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meranotes/constants/messages.dart';
+import 'package:meranotes/extenions/buildcontext/loc.dart';
 import 'package:meranotes/services/auth/bloc/auth_bloc.dart';
 import 'package:meranotes/services/auth/auth_exceptions.dart';
 import 'package:meranotes/services/auth/bloc/auth_event.dart';
@@ -38,16 +38,16 @@ class _LoginViewState extends State<LoginView> {
       listener: (context, state) async {
         if (state is AuthStateLogout) {
           if (state.exception is UserNotFoundAuthException) {
-            showErrorDialog(context, userNotFoundMessage);
+            showErrorDialog(context, context.loc.login_error_cannot_find_user);
           } else if (state.exception is WrongPasswordAuthException) {
-            showErrorDialog(context, wrongCredentialsMessage);
+            showErrorDialog(context, context.loc.login_error_wrong_credentials);
           } else if (state.exception is GenericAuthException) {
-            showErrorDialog(context, generalLoginMessage);
+            showErrorDialog(context, context.loc.login_error_auth_error);
           }
         }
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text(loginButtonTitle)),
+        appBar: AppBar(title: Text(context.loc.login)),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
@@ -58,14 +58,16 @@ class _LoginViewState extends State<LoginView> {
                   enableSuggestions: false,
                   autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(hintText: hintEmailText),
+                  decoration: InputDecoration(
+                      hintText: context.loc.email_text_field_placeholder),
                 ),
                 TextField(
                   controller: _password,
                   obscureText: true,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(hintText: hintPasswordText),
+                  decoration: InputDecoration(
+                      hintText: context.loc.password_text_field_placeholder),
                 ),
                 TextButton(
                   onPressed: () async {
@@ -78,7 +80,7 @@ class _LoginViewState extends State<LoginView> {
                           ),
                         );
                   },
-                  child: const Text(loginButtonTitle),
+                  child: Text(context.loc.login),
                 ),
                 TextButton(
                     onPressed: () {
@@ -86,14 +88,14 @@ class _LoginViewState extends State<LoginView> {
                             const AuthEventShouldRegister(),
                           );
                     },
-                    child: const Text(notRegisteredButtonText)),
+                    child: Text(context.loc.login_view_not_registered_yet)),
                 TextButton(
                     onPressed: () {
                       context.read<AuthBloc>().add(
                             const AuthEventForgotPassword(),
                           );
                     },
-                    child: const Text(forgotPasswordButtonText))
+                    child: Text(context.loc.login_view_forgot_password))
               ],
             ),
           ),

@@ -1,0 +1,51 @@
+{
+  "logout_button": "लॉग आउट",
+  "note": "नोट्",
+  "cancel": "रद्द करना",
+  "yes": "हां",
+  "delete": "मिटाना",
+  "sharing": "शेयरिंग",
+  "ok": "ठीक है",
+  "login": "लॉग इन करें",
+  "verify_email": "ईमेल सत्यापित करें",
+  "register": "रजिस्टर",
+  "restart": "पुनर्प्रारंभ करें",
+  "start_typing_your_note": "अपना नोट लिखना प्रारंभ करें",
+  "delete_note_prompt": "क्या आप पक्का इस नोट को मिटाना चाहते हैं?",
+  "cannot_share_empty_note_prompt": "खाली नोट साझा नहीं मिटा सकते!",
+  "generic_error_prompt": "एक त्रुटि पाई गई",
+  "logout_dialog_prompt": "क्या आप लॉग आउट करना चाहते हैं?",
+  "password_reset": "पासवर्ड रीसेट",
+  "password_reset_dialog_prompt": "हमने अब आपको एक पासवर्ड रीसेट लिंक भेजा है। अधिक जानकारी के लिए कृपया अपना ईमेल देखें।",
+  "login_error_cannot_find_user": "दर्ज किए गए क्रेडेंशियल वाले उपयोगकर्ता को नहीं ढूंढ सकता!",
+  "login_error_wrong_credentials": "गलत क्रेडेंशियल",
+  "login_error_auth_error": "प्रमाणीकरण त्रुटि",
+  "login_view_prompt": "नोट्स बनाने के लिए कृपया अपने खाते में लॉग इन करें!",
+  "login_view_forgot_password": "मैं अपना पासवर्ड भूल गया",
+  "login_view_not_registered_yet": "पंजीकरण नहीं किया? यहां रजिस्टर करें!",
+  "email_text_field_placeholder": "अपना ई मेल यहा भरे",
+  "password_text_field_placeholder": "अपना पासवर्ड यहां दर्ज करें",
+  "forgot_password": "पासवर्ड भूल गए",
+  "forgot_password_view_generic_error": "हम आपके अनुरोध को संसाधित नहीं कर सके. कृपया सुनिश्चित करें कि आप एक पंजीकृत उपयोगकर्ता हैं, या यदि नहीं, तो एक कदम पीछे जाकर उपयोगकर्ता को अभी पंजीकृत करें।",
+  "forgot_password_view_prompt": "यदि आप अपना पासवर्ड भूल गए हैं, तो बस अपना ईमेल दर्ज करें और हम आपको एक पासवर्ड रीसेट लिंक भेजेंगे।",
+  "forgot_password_view_send_me_link": "मुझे पासवर्ड रीसेट लिंक भेजें",
+  "forgot_password_view_back_to_login": "लॉगिन पेज पर वापस जाएं",
+  "register_error_weak_password": "यह पासवर्ड पर्याप्त सुरक्षित नहीं है। कृपया कोई दूसरा पासवर्ड चुनें!",
+  "register_error_email_already_in_use": "यह ईमेल पहले से ही किसी अन्य उपयोगकर्ता के लिए पंजीकृत है। कृपया कोई अन्य ईमेल चुनें!",
+  "register_error_generic": "जीकरण करने में विफल। बाद में पुन: प्रयास करें!",
+  "register_error_invalid_email": "आपके द्वारा दर्ज किया गया ईमेल पता अमान्य प्रतीत होता है। कृपया कोई अन्य ईमेल पता आज़माएं!",
+  "register_view_prompt": "अपने नोट्स देखने के लिए अपना ईमेल और पासवर्ड दर्ज करें!",
+  "register_view_already_registered": "पहले से ही पंजीकृत? यहां लॉगिन करें!",
+  "verify_email_view_prompt": "हमने आपको एक ईमेल सत्यापन भेजा है। कृपया अपना खाता सत्यापित करने के लिए इसे खोलें। अगर आपको अभी तक सत्यापन ईमेल नहीं मिला है, तो नीचे दिया गया बटन दबाएं!",
+  "verify_email_send_email_verification": "ईमेल सत्यापन भेजें",
+  "notes_are_loading": "नोट लोड हो रहे हैं...",
+  "notes_title": "{count, plural, =0{अभी तक कोई नोट नहीं} =1{1 नोट} other{{count} नोटस}}",
+  "@notes_title": {
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3 नोटस"
+      }
+    }
+  }
+}
