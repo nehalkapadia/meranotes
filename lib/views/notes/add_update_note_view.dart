@@ -7,7 +7,6 @@ import 'package:meranotes/utilities/generic/get_arguments.dart';
 import 'package:meranotes/services/cloud/cloud_note.dart';
 import 'package:meranotes/services/cloud/firebase_cloud_storage.dart';
 import 'package:share_plus/share_plus.dart';
-import 'dart:developer' as devtools;
 
 class AddUpdateNoteView extends StatefulWidget {
   const AddUpdateNoteView({Key? key}) : super(key: key);
@@ -64,6 +63,7 @@ class _AddUpdateNoteViewState extends State<AddUpdateNoteView> {
     final currentUser = AuthService.firebase().currentUser!;
     final userId = currentUser.id;
     final newNote = await _notesService.createNewNote(ownerUserId: userId);
+
     _note = newNote;
     return newNote;
   }
@@ -104,7 +104,7 @@ class _AddUpdateNoteViewState extends State<AddUpdateNoteView> {
           IconButton(
             onPressed: () async {
               final text = _textEditingController.text;
-              if (_note != null || text.isEmpty) {
+              if (_note == null || text.isEmpty) {
                 await showCannotShareEmptyNoteDialog(context);
               } else {
                 Share.share(text);
